@@ -1,0 +1,5 @@
+package com.samplepoint.beans;
+
+public enum DataModes {
+	MA969_DTV, MA969_AM, MA969_FM, MA969_AFM, MA969_CDR, MA969_DTV_AFM, MA969_ADTV_AFM, MA969_DTV_CDR, MA969_AFM_CDR, MA969_DTV_AFM_CDR, MA969_ALL;
+}

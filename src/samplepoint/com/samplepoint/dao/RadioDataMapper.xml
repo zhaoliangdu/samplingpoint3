@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.samplepoint.dao.RadioDataMapper">
+	<resultMap type="com.samplepoint.beans.RadioData" id="radiodataMap">
+		<id property="id" column="id" />
+		<result property="time" column="time" />
+		<result property="area" column="area" />
+		<result property="latitude" column="Latitude" />
+		<result property="longitude" column="Longitude" />
+		<result property="height" column="Height" />
+		<result property="speed" column="Speed" />
+		<result property="testModeId" column="testMode_id" />
+		<result property="frequency" column="frequency" />
+		<result property="wideBand" column="wideBand" />
+		<result property="fieldStrength" column="fieldStrength" />
+		<result property="frequencyOffset" column="frequency_Offset" />
+		<result property="signalNoiseRatio" column="signal_Noise_Ratio" />
+		<result property="regulationSystem" column="Regulation_System" />
+		<result property="transforLat" column="transfor_lat" />
+		<result property="transforLng" column="transfor_lng" />
+		<result property="eid" column="eid" />
+	</resultMap>
+	<insert id="saveRadioData" parameterType="com.samplepoint.beans.RadioData">
+		INSERT INTO radio_data
+		(TIME,AREA,Longitude,Latitude,Height,Speed,testMode_id,frequency,wideBand,fieldStrength,frequency_Offset,signal_Noise_Ratio,Regulation_System,eid,transfor_lng,transfor_lat)
+		VALUES
+		(#{time},#{area},#{longitude},#{latitude},#{height},#{speed},#{testModeId},#{frequency},#{wideBand},#{fieldStrength},#{frequencyOffset},#{signalNoiseRatio},#{regulationSystem},#{eid},#{transforLng},#{transforLat});
+	</insert>
+	<select id="findMaxField" resultType="float">
+		select max(fieldStrength)
+		FROM radio_data;
+	</select>
+	<select id="findMinField" resultType="float">
+		select min(fieldStrength)
+		FROM radio_data;
+	</select>
+	<select id="findMaxSnr" resultType="float">
+		select
+		max(signal_Noise_Ratio)
+		FROM radio_data;
+	</select>
+	<select id="findMinSnr" resultType="float">
+		select
+		min(signal_Noise_Ratio)
+		FROM radio_data;
+	</select>
+	<select id="findMaxLng" resultType="float">
+		select max(transfor_lng) from
+		radio_data;
+	</select>
+	<select id="findMinLng" resultType="float">
+		select min(transfor_lng) from
+		radio_data;
+	</select>
+	<select id="findMaxLat" resultType="float">
+		select max(transfor_lat) from
+		radio_data;
+	</select>
+	<select id="findMinLat" resultType="float">
+		select min(transfor_lat) from
+		radio_data;
+	</select>
+	<select id="findById" parameterType="int" resultType="com.samplepoint.beans.RadioData">
+		select
+		radio_data.id,TIME,AREA,transfor_lng,transfor_lat,Height,Speed,testMode_id,frequency,wideBand,fieldStrength,test_data.eid,frequency_Offset,signal_Noise_Ratio,Regulation_System
+		FROM radio_data WHERE radio_data.id=#{id};
+	</select>
+	<select id="listRadioDataByField" parameterType="map" resultMap="radiodataMap">
+		select
+		radio_data.id,TIME,AREA,transfor_lng,transfor_lat,Height,Speed,testMode_id,frequency,wideBand,fieldStrength,test_data.eid,frequency_Offset,signal_Noise_Ratio,Regulation_System
+		FROM radio_data WHERE fieldStrength BETWEEN #{downfield} AND
+		#{upfield}
+	</select> 
+	<select id="listRadioDataByArea" parameterType="string"
+		resultMap="radiodataMap">
+		select * from radio_data where area like
+		CONCAT(CONCAT('%',#{area},'%'))
+	</select>
+	<select id="checkTime" resultType="int" parameterType="string">
+		SELECT
+		COUNT(*) FROM radio_data WHERE TIME=#{time}
+	</select>
+	<select id="listAreas" resultType="string">
+		SELECT DISTINCT AREA FROM
+		radio_data
+	</select>
+	<select id="listFrequencys" resultType="float">
+		select DISTINCT frequency
+		from radio_data ;
+	</select>
+	<select id="listRadioDatas" resultMap="radiodataMap">
+		select * FROM radio_data ;
+	</select>
+	<select id="listRadioDatatsf" resultMap="radiodataMap">
+		select
+		radio_data.id,TIME,AREA,transfor_lng,transfor_lat,Height,Speed,testMode_id,frequency,wideBand,fieldStrength,radio_data.eid,frequency_Offset,signal_Noise_Ratio,Regulation_System
+		FROM radio_data ;
+	</select>
+	<select id="getLatitueByLng" parameterType="float" resultType="float">
+		SELECT distinct transfor_lat FROM radio_data WHERE
+		transfor_lng=#{transforLng};
+	</select>
+	<select id="getLngitudeByLat" parameterType="float" resultType="float">
+		SELECT distinct transfor_lng FROM radio_data WHERE
+		transfor_lat=#{transforLat};
+	</select>
+	<select id="listRadioDataByParam" resultMap="radiodataMap"
+		parameterType="map">
+		select * FROM radio_data WHERE 1=1
+		<if test="testModeId!=null and testModeId!='' and testModeId>0">
+			AND testMode_id = #{testModeId}
+		</if>
+		<if
+			test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area !=''">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			and frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+		order by id LIMIT #{pageNo},#{pageNumr};
+	</select>
+	<select id="getFieldCount" parameterType="map" resultType="int">
+		select count(*) from radio_data where fieldStrength between
+		#{downField} and #{upField}
+	</select>
+	<select id="getSampleCount" resultType="int">
+		select count(*) from
+		radio_data;
+	</select>
+	<select id="getCount" resultType="int" parameterType="map">
+		SELECT count(*) FROM radio_data WHERE 1=1
+		<if
+			test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area!=''">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="testModeId!=null and testModeId!='' and testModeId>0">
+			AND testMode_id = #{testModeId}
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			AND frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+	</select>
+	<select id="listFieldStrength" resultType="float" parameterType="string">
+		select fieldStrength
+		from radio_data where area=#{area};
+	</select>
+	<update id="updateLngLat" parameterType="map">
+		update radio_data set
+		transfor_lng = #{transforLng},transfor_lat = #{transforLat} where
+		id=#{id};
+	</update>
+	<update id="updateEId" parameterType="map">
+		UPDATE radio_data SET
+		eid=#{eid} WHERE AREA like CONCAT(CONCAT('%',#{area},'%'))
+	</update>
+
+	<delete id="deleteRadioData" parameterType="int">
+		delete from
+		radio_data where id=#{id}
+	</delete>
+</mapper>

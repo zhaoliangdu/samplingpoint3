@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.samplepoint.dao.AnalogDataMapper">
+	<resultMap type="com.samplepoint.beans.AnalogData" id="analogdataMap">
+		<id property="id" column="id" />
+		<result property="time" column="time" />
+		<result property="area" column="area" />
+		<result property="latitude" column="Latitude" />
+		<result property="longitude" column="Longitude" />
+		<result property="height" column="Height" />
+		<result property="speed" column="Speed" />
+		<result property="testModeId" column="testMode_id" />
+		<result property="frequency" column="frequency" />
+		<result property="fieldStrength" column="fieldStrength" />
+		<result property="snr" column="snr" />
+		<result property="transforLat" column="transfor_lat" />
+		<result property="transforLng" column="transfor_lng" />
+		<result property="eid" column="eid" />
+	</resultMap>
+	<insert id="saveAnalogData" parameterType="com.samplepoint.beans.AnalogData">
+		INSERT INTO
+		analog_data
+		(TIME,AREA,Longitude,Latitude,Height,Speed,testMode_id,frequency,fieldStrength,snr,eid,transfor_lat,transfor_lng)
+		VALUES
+		(#{time},#{area},#{longitude},#{latitude},#{height},#{speed},#{testModeId},#{frequency},#{fieldStrength},#{snr},#{eid},#{transforLat},#{transforLng});
+	</insert>
+	<select id="findMaxField" resultType="float">
+		select max(fieldStrength)
+		FROM analog_data;
+	</select>
+	<select id="findMinField" resultType="float">
+		select min(fieldStrength)
+		FROM
+		analog_data;
+	</select>
+
+	<select id="findMaxLng" resultType="float">
+		select max(transfor_lng) from
+		analog_data;
+	</select>
+	<select id="findMinLng" resultType="float">
+		select min(transfor_lng) from
+		analog_data;
+	</select>
+	<select id="findMaxLat" resultType="float">
+		select max(transfor_lat) from
+		analog_data;
+	</select>
+	<select id="findMinLat" resultType="float">
+		select min(transfor_lat) from
+		analog_data;
+	</select>
+
+	<select id="findById" parameterType="int"
+		resultType="com.samplepoint.beans.AnalogData">
+		select * FROM analog_data WHERE id=#{id};
+	</select>
+	<select id="listAnalogDataByField" parameterType="map"
+		resultMap="analogdataMap">
+		select * FROM analog_data WHERE fieldStrength BETWEEN
+		#{downfield} AND
+		#{upfield};
+	</select>
+	<select id="findLngByLat" parameterType="float">
+		SELECT transfor_lng FROM
+		analog_data WHERE transfor_lat = #{transfor_lat}
+	</select>
+	<select id="checkTime" resultType="int" parameterType="string">
+		SELECT
+		COUNT(*) FROM analog_data WHERE TIME=#{time}
+	</select>
+	<select id="listAreas" resultType="string">
+		SELECT DISTINCT AREA FROM
+		analog_data
+	</select>
+	<select id="findLatByLng" parameterType="float">
+		SELECT transfor_lat FROM
+		analog_data WHERE transfor_lng = #{transforLng}
+	</select>
+	<select id="listFrequencys" resultType="float">
+		select DISTINCT frequency
+		from analog_data ;
+	</select>
+	<select id="listAnalogDatas" resultMap="analogdataMap">
+		select * FROM
+		analog_data;
+	</select>
+	<select id="findAnalogDataByArea" parameterType="string"
+		resultMap="analogdataMap">
+		select * from analog_data where area like
+		CONCAT(CONCAT('%',#{area},'%'))
+	</select>
+	<select id="getAnalogDatatsf" resultMap="analogdataMap">
+		select * FROM
+		analog_data ;
+	</select>
+	<select id="getLatitueByLng" parameterType="float" resultType="float">
+		SELECT distinct transfor_lat FROM analog_data WHERE
+		transfor_lng=#{transforLng};
+	</select>
+	<select id="getLngitudeByLat" parameterType="float" resultType="float">
+		SELECT distinct transfor_lng FROM analog_data WHERE
+		transfor_lat=#{transforLat};
+	</select>
+	<select id="listAnalogDataByParam" resultMap="analogdataMap"
+		parameterType="map">
+		select * FROM analog_data WHERE 1=1
+		<if
+			test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area!='' ">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			AND frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+		order by id LIMIT #{pageNo},#{pageNumr};
+	</select>
+	<select id="getFieldCount" parameterType="map" resultType="int">
+		select count(*) from digital_data where fieldStrength between
+		#{downField} and #{upField};
+	</select>
+	<select id="getSampleCount" resultType="int">
+		select count(*) from
+		analog_data;
+	</select>
+	<select id="getCount" resultType="int" parameterType="map">
+		SELECT count(*) FROM analog_data WHERE 1=1
+		<if
+			test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area!=''">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			AND frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+	</select>
+	<select id="listFieldStrength" resultType="float" parameterType="string">
+		select fieldStrength
+		from analog_data where area=#{area};
+	</select>
+	<update id="updateLngLat" parameterType="map">
+		update analog_data set
+		transfor_lng = #{transforLng},transfor_lat = #{transforLat} where
+		id=#{id};
+	</update>
+	<update id="updateEId" parameterType="map">
+		UPDATE analog_data SET
+		eid=#{eid} WHERE AREA like CONCAT(CONCAT('%',#{area},'%'))
+	</update>
+	<delete id="deleteAnalogData" parameterType="int">
+		delete from
+		analog_data where id=#{id}
+	</delete>
+</mapper>

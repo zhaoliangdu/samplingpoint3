@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samplepoint.dao.EmitterMapper">
+	<resultMap type="com.samplepoint.beans.Emitter"
+		id="emitterMap">
+		<id property="id" column="eid" />
+		<result property="emitterName" column="emitter_name" />
+		<result property="longitude" column="emitter_longitude" />
+		<result property="latitude" column="emitter_latitude" />
+	</resultMap>
+	<select id="geEmitters" resultMap="emitterMap">
+		select * from emitter;
+	</select>
+	<select id="findByEmitter" resultMap="emitterMap">
+		select * from emitter where eid=1;
+	</select>
+	<select id="findById" parameterType="int" resultMap="emitterMap">
+		select *
+		from emitter where eid = #{id};
+	</select>
+	<select id="findByName" parameterType="string"
+		resultMap="emitterMap">
+		select * from emitter where emitter_name=#{emitterName};
+	</select>
+	<select id="findByLocation" parameterType="map"
+		resultMap="emitterMap">
+		select * from emitter where emitter_longitude=#{lng} and
+		emitter_latitude=#{lat};
+	</select>
+	<update id="updateEmitter"
+		parameterType="com.samplepoint.beans.Emitter">
+		update emitter set
+		emitter_name=#{emitterName},emitter_longitude=#{longitude},emitter_latitude=#{latitude}
+		where eid=1;
+	</update>
+
+</mapper>

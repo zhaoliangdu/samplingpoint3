@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 借口全类名 -->
+<mapper namespace="com.samplepoint.dao.CDRDataMapper">
+	<resultMap type="com.samplepoint.beans.CDRData" id="cdrdataMap">
+		<id property="id" column="id" />
+		<result property="time" column="time" />
+		<result property="area" column="area" />
+		<result property="latitude" column="Latitude" />
+		<result property="longitude" column="Longitude" />
+		<result property="height" column="Height" />
+		<result property="speed" column="Speed" />
+		<result property="testModeId" column="testMode_id" />
+		<result property="frequency" column="frequency" /> 
+		<result property="fieldStrength" column="fieldStrength" />
+		<result property="snr" column="snr" />
+		<result property="mer" column="mer" />
+		<result property="ber" column="ber" />
+		<result property="ldpc" column="ldpc" />
+		<result property="transforLat" column="transfor_lat" />
+		<result property="transforLng" column="transfor_lng" />
+		<result property="eid" column="eid" />
+	</resultMap>
+	<insert id="saveCDRData" parameterType="com.samplepoint.beans.CDRData">
+		INSERT INTO
+		cdr_data
+		(TIME,AREA,Longitude,Latitude,Height,Speed,testMode_id,frequency,fieldStrength,snr,mer,ber,ldpc,eid,transfor_lat,transfor_lng)
+		VALUES
+		(#{time},#{area},#{longitude},#{latitude},#{height},#{speed},#{testModeId},#{frequency},#{fieldStrength},#{snr},#{mer},#{ber},#{ldpc},#{eid},#{transforLat},#{transforLng});
+	</insert>
+	<select id="findMaxField" resultType="float">
+		select max(fieldStrength) FROM cdr_data;
+	</select>
+	<select id="findMinField" resultType="float">
+		select min(snr) FROM cdr_data;
+	</select>
+	<select id="findMaxSnr" resultType="float">
+		select max(snr) FROM cdr_data;
+	</select>
+	<select id="findMinSnr" resultType="float">
+		select min(snr) FROM cdr_data;
+	</select>
+	<select id="findMaxLdpc" resultType="float">
+		select max(ldpc) FROM cdr_data;
+	</select>
+	<select id="findMinLdpc" resultType="float">
+		select min(ldpc) FROM cdr_data;
+	</select>
+	<select id="findMaxLng" resultType="float">
+		select max(transfor_lng) from cdr_data;
+	</select>
+	<select id="findMinLng" resultType="float">
+		select min(transfor_lng) from cdr_data;
+	</select>
+	<select id="findMaxLat" resultType="float">
+		select max(transfor_lat) from cdr_data;
+	</select>
+	<select id="findMinLat" resultType="float">
+		select min(transfor_lat) from cdr_data;
+	</select>
+	
+	<select id="findById" parameterType="int"
+		resultType="com.samplepoint.beans.CDRData">
+		select * FROM cdr_data WHERE digital_data.id=#{id};
+	</select>
+	<select id="listCDRDataByField" parameterType="map"
+		resultMap="cdrdataMap">
+		select * FROM cdr_data WHERE fieldStrength BETWEEN #{downfield} AND #{upfield};
+	</select>
+	<select id="findLngByLat" parameterType="float" resultType="float">
+		SELECT transfor_lng FROM
+		cdr_data WHERE transfor_lat = #{transforLat}
+	</select>
+	<select id="checkTime" resultType="int" parameterType="string">
+		SELECT
+		COUNT(*) FROM cdr_data WHERE TIME=#{time}
+	</select>
+	<select id="listAreas" resultType="string">
+		SELECT DISTINCT AREA FROM
+		cdr_data
+	</select>
+	<select id="findLatByLng" parameterType="float" resultType="float">
+		SELECT transfor_lat FROM
+		cdr_data WHERE transfor_lng = #{transforLng}
+	</select>
+	<select id="listFrequencys" resultType="float" >
+		select DISTINCT frequency
+		from cdr_data ;
+	</select>
+	<select id="listCDRDatas" resultMap="cdrdataMap">
+		select * FROM cdr_data ;
+	</select>
+	<select id="findCDRDataByArea" parameterType="string"
+		resultMap="cdrdataMap">
+		select * from cdr_data where area like
+		CONCAT(CONCAT('%',#{area},'%'))
+	</select>
+	<select id="getCDRDatatsf" resultMap="cdrdataMap">
+		select
+		cdr_data.id,TIME,AREA,transfor_lng,transfor_lat,Height,Speed,testMode_id,frequency,fieldStrength,cdr_data.eid,snr,mer,ber,ldpc
+		FROM cdr_data ;
+	</select>
+	<select id="getLatitueByLng" parameterType="float" resultType="float">
+		SELECT distinct transfor_lat FROM cdr_data WHERE
+		Longitude=#{Longitude};
+	</select>
+	<select id="getLngitudeByLat" parameterType="float" resultType="float">
+		SELECT distinct transfor_lng FROM cdr_data WHERE
+		transfor_lat=#{transforLat};
+	</select>
+	<select id="listCDRDataByParam" resultMap="cdrdataMap"
+		parameterType="map">
+		select * FROM cdr_data WHERE 1=1
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area!='' ">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			AND frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+		order by id LIMIT #{pageNo},#{pageNumr};
+	</select>
+	<select id="getFieldCount" parameterType="map" resultType="int">
+		select count(*) from cdr_data where fieldStrength between
+		#{downField} and #{upField};
+	</select>
+	<select id="getSampleCount" resultType="int">
+		select count(*) from
+		cdr_data;
+	</select>
+	<select id="getCount" resultType="int" parameterType="map">
+		SELECT count(*) FROM cdr_data WHERE 1=1 
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+			AND TIME BETWEEN #{startTime} and #{endTime}
+		</if>
+		<if test="area!=null and area!=''">
+			AND area like CONCAT(CONCAT('%',#{area},'%'))
+		</if>
+		<if test="frequency!=null and frequency!=''">
+			AND frequency like CONCAT(CONCAT('%',#{frequency},'%'))
+		</if>
+	</select>
+	<select id="listFieldStrength" resultType="float" parameterType="string">
+		select fieldStrength
+		from cdr_data where area=#{area};
+	</select> 
+	<update id="updateLngLat" parameterType="map">
+		update cdr_data set
+		transfor_lng = #{transforLng},transfor_lat = #{transforLat} where
+		id=#{id};
+	</update> 
+	<update id="updateEId" parameterType="map">
+		UPDATE cdr_data SET
+		eid=#{eid} WHERE AREA like CONCAT(CONCAT('%',#{area},'%'))
+	</update> 
+	<delete id="deleteCDRData" parameterType="int">
+		delete from
+		cdr_data where id=#{id}
+	</delete>
+</mapper>
