@@ -57,7 +57,7 @@
 function delcdr(id){
 	if(confirm("确定删除吗？")){
 		$.ajax({
-			url:"delcdrdata",
+			url:"${pageContext.servletContext.contextPath }/delcdrdata",
 			type:"post",
 			data:{"id":id},
 			success:function(msg){

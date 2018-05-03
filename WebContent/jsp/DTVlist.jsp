@@ -58,7 +58,7 @@
 	function deldigital(id) {
 		if(confirm("确定删除吗？")){
 			$.ajax({
-				url:"deldigitaldata",
+				url:"${pageContext.servletContext.contextPath }/deldigitaldata",
 				type:"post",
 				data:{"id":id},
 				success:function(msg){

@@ -50,7 +50,7 @@
 	function delanalog(id){
 		if(confirm("确定删除吗？")){
 			$.ajax({
-				url:"delanalogdata",
+				url:"${pageContext.servletContext.contextPath }/delanalogdata",
 				type:"post",
 				data:{"id":id},
 				success:function(msg){
