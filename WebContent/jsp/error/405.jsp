@@ -9,7 +9,7 @@
 <body>
 <center>
 <h2>错误码405...请求方错误！</h2>
-<a href="${pageContext.servletContext.contextPath }/index.jsp">返回首页</a>
+<a href="../samplingpoint2/index.jsp">返回首页</a>
 </center>
 </body>
 </html>
