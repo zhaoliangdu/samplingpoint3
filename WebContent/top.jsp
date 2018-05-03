@@ -31,7 +31,8 @@
 	setInterval("startTime()", 100);
 </script>
 
-<body oncontextmenu=self.event.returnValue=false style="font-size:18px;">
+<body oncontextmenu=self.event.returnValue=false
+	style="font-size: 18px;">
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 		<a class="navbar-brand" href="index.jsp">采样点信息系统 <img
 			src="resource/images/logo.gif" alt="北京宝盈科技" /></a>
@@ -50,6 +51,8 @@
 				</div></li>
 			<li class="nav-item"><a href="systemset?typeId=1"
 				class="nav-link"> 系统设置</a></li>
+			<li class="nav-item"><a href="gaode" class="nav-link"> 高德地图</a></li>
+			<li class="nav-item"><a href="bing" class="nav-link"> 必应地图</a></li>
 			<li class="nav-item"><a href="datalist?type=1" class="nav-link">数据列表</a></li>
 		</ul>
 		<span id="time" style="color: #ffffff; float: right;"></span>&nbsp;&nbsp;<span
@@ -118,8 +121,7 @@
 						<option value="2">调频/调幅</option>
 						<option value="3">CDR</option>
 						<option value="4">模拟电视</option>
-					</select> 
-					<label>选择类型：</label> <select class="form-control" id="mtype">
+					</select> <label>选择类型：</label> <select class="form-control" id="mtype">
 						<option value="1">场强</option>
 						<option value="2">信噪比</option>
 						<option value="3">误包率</option>

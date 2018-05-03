@@ -9,7 +9,7 @@
 <body>
 <center>
 <h2>错误码：400...页面错误请求！</h2>
-<a href="../samplingpoint2/index.jsp">返回首页</a>
+<a href="${pageContext.servletContext.contextPath }/index.jsp">返回首页</a>
 </center>
 
 </body>
