@@ -4,14 +4,13 @@
 <jsp:include page="../top.jsp"></jsp:include>
 
 <div class="container-fluid">
-
 	<form role="form"
-		action="${pageContext.servletContext.contextPath }/systemset/updatesysset"
+		action="${pageContext.servletContext.contextPath }/updatesysset"
 		method="post" class="form-inline">
 
-		<div style="padding: 10px 40px;">
+		<div class="panel panel-default" style="padding: 10px 40px;">
 			<center>
-				<div style="font-size: 20px">系统设置</div>
+				<div class="panel-title" style="font-size: 20px">系统设置</div>
 			</center>
 			<table>
 				<tr>
@@ -68,11 +67,10 @@
 			<br>
 			<center>
 				<button type="submit" class="btn btn-primary" onclick="save()">保存</button>
-				<a href="${pageContext.servletContext.contextPath}/systemset/resetsystemset" class="btn btn-dark">恢复默认设置</a>
+				<a href="resetset" class="btn btn-dark">恢复默认设置</a>
 			</center>
 		</div>
 	</form>
-
 </div>
 <input hidden="hidden" id="locationset"
 	value="${pageContext.servletContext.contextPath}/systemset?typeId=" />

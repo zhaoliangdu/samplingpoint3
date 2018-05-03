@@ -19,37 +19,6 @@
 	color: #fff;
 	font-size: 14px;
 }
-
-#tip {
-	padding-left: 10px;
-	padding-right: 10px;
-	position: absolute;
-	font-size: 12px;
-	right: 10px;
-	top: 55px;
-	border-radius: 3px;
-	line-height: 30px;
-}
-
-body, html, #allmap, #container, #bingMap {
-	width: 100%;
-	height: 100%;
-	z-index: 999;
-	margin: 0;
-	overflow: hidden;
-	font-family: "微软雅黑";
-}
-
-#lnglat {
-	position: absolute;
-	z-index: 9999;
-	top: 0;
-	left: 0;
-	padding: 3px 10px;
-	background: #6699ff;
-	color: #fff;
-	font-size: 14px;
-}
 </style>
 </head>
 <script type="text/javascript">
@@ -62,33 +31,26 @@ body, html, #allmap, #container, #bingMap {
 	setInterval("startTime()", 100);
 </script>
 
-<body oncontextmenu=self.event.returnValue=false
-	style="font-size: 18px;">
+<body oncontextmenu=self.event.returnValue=false style="font-size:18px;">
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-		<a class="navbar-brand" href="${pageContext.servletContext.contextPath }/index.jsp">采样点信息系统 <img
-			src="${pageContext.servletContext.contextPath }/resource/images/logo.gif"
-			alt="北京宝盈科技" /></a>
+		<a class="navbar-brand" href="index.jsp">采样点信息系统 <img
+			src="resource/images/logo.gif" alt="北京宝盈科技" /></a>
 		<ul class="navbar-nav">
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="${pageContext.servletContext.contextPath }/index.jsp" id="navbardrop"
+				class="nav-link dropdown-toggle" href="index.jsp" id="navbardrop"
 				data-toggle="dropdown"> 地图 </a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#" onclick="openDis()">距离计算</a> <a
 						class="dropdown-item" href="#" data-toggle="modal"
-						data-target="#loadpoint">加载采样点</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
-						class="form-check-input" id="ischeck" onclick="showemitter()" />显示台站
-
+						data-target="#loadpoint">加载采样点</a> &nbsp;&nbsp;&nbsp;&nbsp;<label
+						class="form-check-label"> &nbsp;&nbsp;<input
+						type="checkbox" class="form-check-input" id="ischeck"
+						onclick="showemitter()">显示台站
+					</label>
 				</div></li>
-			<li class="nav-item"><a href="${pageContext.servletContext.contextPath }/index.jsp" class="nav-link">
-					百度地图</a></li>
-			<li class="nav-item"><a href="${pageContext.servletContext.contextPath }/map/gaode" class="nav-link">
-					高德地图</a></li>
-			<li class="nav-item"><a href="${pageContext.servletContext.contextPath }/map/bing" class="nav-link">
-					必应地图</a></li>
-			<li class="nav-item"><a href="${pageContext.servletContext.contextPath }/systemset/getsystemset?typeId=1"
+			<li class="nav-item"><a href="systemset?typeId=1"
 				class="nav-link"> 系统设置</a></li>
-			<li class="nav-item"><a href="${pageContext.servletContext.contextPath }/dataview/datalist?type=1" class="nav-link">数据列表</a></li>
+			<li class="nav-item"><a href="datalist?type=1" class="nav-link">数据列表</a></li>
 		</ul>
 		<span id="time" style="color: #ffffff; float: right;"></span>&nbsp;&nbsp;<span
 			style='color: #ffffff;'>天气情况：</span>
@@ -156,7 +118,8 @@ body, html, #allmap, #container, #bingMap {
 						<option value="2">调频/调幅</option>
 						<option value="3">CDR</option>
 						<option value="4">模拟电视</option>
-					</select> <label>选择类型：</label> <select class="form-control" id="mtype">
+					</select> 
+					<label>选择类型：</label> <select class="form-control" id="mtype">
 						<option value="1">场强</option>
 						<option value="2">信噪比</option>
 						<option value="3">误包率</option>
@@ -172,9 +135,3 @@ body, html, #allmap, #container, #bingMap {
 			</div>
 		</div>
 	</div>
-
-	<input type="hidden" id="mode" value="${mode }" />
-	<input type="hidden" id="emitter" value="${emitter }" />
-	<input type="hidden" id="lng" value="${lng }" />
-	<input type="hidden" id="lat" value="${lat }" />
-	<input type="hidden" id="filepath" value="${filepath }" />

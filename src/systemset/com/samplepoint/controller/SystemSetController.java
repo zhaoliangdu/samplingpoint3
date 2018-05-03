@@ -18,7 +18,6 @@ import com.samplepoint.service.SystemSetService;
 import com.samplepoint.utils.RandomColor;
 
 @Controller
-@RequestMapping("systemset")
 public class SystemSetController {
 	@Autowired
 	SystemSetService service;
@@ -30,7 +29,7 @@ public class SystemSetController {
 	 * @param uid
 	 * @return
 	 */
-	@RequestMapping("getsystemset")
+	@RequestMapping("systemset")
 	public ModelAndView setSystem(@RequestParam("typeId") int typeId, HttpServletRequest request,
 			HttpServletResponse response) {
 

@@ -1,12 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="top.jsp"></jsp:include>
+<style>
+body, html, #allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	font-family: "微软雅黑";
+}
+
+#lnglat {
+	position: absolute;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	padding: 3px 10px;
+	background: #6699ff;
+	color: #fff;
+	font-size: 14px;
+}
+</style>
+
 <div id="allmap"></div>
+<input type="hidden" id="mode" value="${mode }" />
+<input type="hidden" id="emitter" value="${emitter }" />
+<input type="hidden" id="lng" value="${lng }" />
+<input type="hidden" id="lat" value="${lat }" />
+<input type="hidden" id="filepath" value="${filepath }" />
 </body>
 </html>
-<script>
-	$(document).ready(
-			function() {
+<script>  
+	$(document).ready(function() {
 				var mode = $("#mode").val();
 				var emitter = $("#emitter").val();
 				var lng = $("#lng").val();
@@ -15,8 +40,7 @@
 				$("#loadingTip").remove();
 				if (mode != "" && emitter != "" && lng != "" && lat != ""
 						&& filepath != "") {
-					$("<div id='loadingTip' >加载数据，请稍候...</div>").appendTo(
-							$("#allmap"));
+					$("<div id='loadingTip' >加载数据，请稍候...</div>").appendTo($("#allmap"));
 					$.ajax({
 						url : "importdata",
 						type : "post",
@@ -28,8 +52,7 @@
 							"filepath" : filepath
 						},
 						success : function(val) {
-							$("<div id='loadingTip' >" + val + "</div>")
-									.appendTo($("#allmap"));
+							$("<div id='loadingTip' >"+val+"</div>").appendTo($("#allmap"));
 						}
 					});
 				}
@@ -41,7 +64,7 @@
 	map.centerAndZoom(new BMap.Point(106.000, 30.000), 5);
 	map.enableScrollWheelZoom(true);
 	map.enableInertialDragging();
-	 
+
 	map.enableContinuousZoom();
 	map.addControl(new BMap.MapTypeControl());
 	//城市列表
@@ -119,18 +142,20 @@
 				map.removeOverlay(allOverlay[i]);
 			}
 		}
+
 	}
 	//添加采样点
 	function loadpoint() {
-		var testModeId = $("#datatype").val();
-		var typeId = $("#mtype").val();
+		var datatype = $("#datatype").val();
+		var mtype = $("#mtype").val();
 
 		$("#loadingTip").remove();
 		$("<div id='loadingTip' >加载数据，请稍候...</div>").appendTo($("#allmap"));
 		var allOverlay = map.getOverlays();
 		for (var i = 0; i < allOverlay.length; i++) {
 			map.removeOverlay(allOverlay[i]);
-		} 
+		}
+
 		var opts = {
 			width : 250, // 信息窗口宽度
 			height : 300, // 信息窗口高度
@@ -146,21 +171,19 @@
 					url : "getpoints",
 					type : "post",
 					data : {
-						"testModeId" : testModeId,
-						"typeId" : typeId
+						"testModeId" : datatype,
+						"typeId" : mtype
 					},
 					success : function(val) {
 						$("#loadingTip").remove();
-						if (val[1] != "") {
-							$(
-									"<div id='loadingTip'  style='background-color:#6699ff'>加载完成！</div>")
+						if(val[1]!=""){ 
+							$("<div id='loadingTip'  style='background-color:#6699ff'>加载完成！</div>")
 									.appendTo($("#allmap"));
-						} else {
-							$(
-									"<div id='loadingTip'  style='background-color:red'>数据不存在！</div>")
-									.appendTo($("#allmap"));
+						}else{
+							$("<div id='loadingTip'  style='background-color:red'>数据不存在！</div>")
+							.appendTo($("#allmap"));
 						}
-
+						
 						if (document.createElement('canvas').getContext) {
 							var pointss = new Array(val[0].length);
 							for (var i = 0; i < pointss.length; i++) {
@@ -171,14 +194,14 @@
 								pointvals[i] = new BMap.Point(val[1][i].lon,
 										val[1][i].lat);
 								for (var j = 0; j < val[0].length; j++) {
-									if (typeId == 1) {
+									if (mtype == 1) {
 										if (val[1][i].field >= parseInt(val[0][j]
 												.split("-")[0])
 												&& val[1][i].field < parseInt(val[0][j]
 														.split("-")[1])) {
 											pointss[j].push(pointvals[i]);
 										}
-									} else if (typeId == 2) {
+									} else if (mtype == 2) {
 										if (val[1][i].snr >= parseInt(val[0][j]
 												.split("-")[0])
 												&& val[1][i].snr < parseInt(val[0][j]
@@ -235,7 +258,7 @@
 											everyLat);
 									if (pointEvery.equals(point)) {
 										var sampleInfo;
-										if (testModeId == 1) {
+										if (datatype == 1) {
 											sampleInfo = "<br>时间："
 													+ val[1][i].time
 															.substring(

@@ -51,8 +51,7 @@
 					<td>${radiodata.regulationSystem }</td>
 					<td>${radiodata.distance }</td>
 					<td>${radiodata.angle }</td>
-					<td><a href="#"
-						onclick="delradiodata(${radiodata.id })"
+					<td><a href="#" onclick="delradiodata(${radiodata.id })"
 						class="btn btn-danger">删除</a></td>
 				</tr>
 			</c:forEach>
@@ -63,7 +62,7 @@
 	function delradiodata(id){
 		if(confirm("确定删除吗？")){
 			$.ajax({
-				url:"${pageContext.servletContext.contextPath }/delradiodata",
+				url:"delradiodata",
 				type:"post",
 				data:{"id":id},
 				success:function(msg){

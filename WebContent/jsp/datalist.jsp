@@ -9,19 +9,19 @@
 &nbsp;
 <div class="container">
 	<nav class="navbar navbar-expand-sm bg-light">
-		<div class='navbar-brand' style="border:1px solid #6699ff;">数据类型选择： <strong>${type }</strong> </div>
+		<div class='navbar-brand' style="border:1px solid #6699ff;">数据类型选择： ${type } </div>
 		<ul class="navbar-nav">
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.servletContext.contextPath }/dataview/datalist?type=1">数字电视</a>
+				href="${pageContext.servletContext.contextPath }/datalist?type=1">数字电视</a>
 			</li>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.servletContext.contextPath }/dataview/datalist?type=2">模拟电视</a>
+				href="${pageContext.servletContext.contextPath }/datalist?type=2">模拟电视</a>
 			</li>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.servletContext.contextPath }/dataview/datalist?type=3">CDR</a>
+				href="${pageContext.servletContext.contextPath }/datalist?type=3">CDR</a>
 			</li>
 			<li class="nav-item"><a class="nav-link"
-				href="${pageContext.servletContext.contextPath }/dataview/datalist?type=4">调幅调频</a>
+				href="${pageContext.servletContext.contextPath }/datalist?type=4">调幅调频</a>
 			</li>
 		</ul>
 	</nav>
