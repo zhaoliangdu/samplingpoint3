@@ -150,20 +150,18 @@ body, html, #bingMap {
 								}
 							}
 
-							var infobox = new Microsoft.Maps.Infobox(pushpins[0]
-									.getLocation(), {
-								visible : false
-							});
+							var infobox = new Microsoft.Maps.Infobox(
+									pushpins[0].getLocation(), {
+										visible : false
+									});
 							infobox.setMap(bingmap);
 							for (var a = 0; a < pushpins.length; a++) {
-
+								 
 								pushpins[a].metadata = {
 									title : '采样点信息',
 									description : "<hr>时间："
 											+ val[1][a].time
-													.substring(
-															0,
-															(val[1][a].time.length) - 2)
+													.substring(0,(val[1][a].time.length) - 2)
 											+ "<br>频率：" + val[1][a].frequency
 											+ "(MHz)<br>经度：" + val[1][a].lon
 											+ "<br>纬度：" + val[1][a].lat
@@ -179,8 +177,7 @@ body, html, #bingMap {
 												pushpins[a],
 												'click',
 												function(args) {
-													infobox
-															.setOptions({
+													infobox.setOptions({
 																location : args.target
 																		.getLocation(),
 																title : args.target.metadata.title,

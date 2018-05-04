@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>北京宝盈科技-采样点信息系统</title>
+
 <jsp:include page="resource/resource.jsp"></jsp:include>
 <style type="text/css">
 #loadingTip {
@@ -20,7 +21,6 @@
 	font-size: 14px;
 }
 </style>
-</head>
 <script type="text/javascript">
 	//显示当前时间
 	function startTime() {
@@ -30,8 +30,10 @@
 	}
 	setInterval("startTime()", 100);
 </script>
+</head>
 
-<body oncontextmenu=self.event.returnValue=false
+
+<body oncontextmenu="self.event.returnValue=false"
 	style="font-size: 18px;">
 	<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
 		<a class="navbar-brand" href="index.jsp">采样点信息系统 <img
@@ -43,8 +45,8 @@
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="#" onclick="openDis()">距离计算(百度)</a><a
 						class="dropdown-item" href="#" onclick="mianji()">面积计算(高德)</a><a
-						class="dropdown-item" href="#" onclick="startRuler2()">距离计算(高德)</a> <a
-						class="dropdown-item" href="#" data-toggle="modal"
+						class="dropdown-item" href="#" onclick="startRuler2()">距离计算(高德)</a>
+					<a class="dropdown-item" href="#" data-toggle="modal"
 						data-target="#loadpoint">加载采样点</a> &nbsp;&nbsp;&nbsp;&nbsp;<label
 						class="form-check-label"> &nbsp;&nbsp;<input
 						type="checkbox" class="form-check-input" id="ischeck"

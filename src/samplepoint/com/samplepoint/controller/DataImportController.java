@@ -34,6 +34,16 @@ public class DataImportController {
 	@Autowired
 	EmitterService eservice;
 
+	/**
+	 * 从文件导入数据
+	 * @param mode
+	 * @param emitter
+	 * @param lng
+	 * @param lat
+	 * @param filepath
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("fileimport")
 	public ModelAndView fileImport(@RequestParam("mode") String mode, @RequestParam("emitter") String emitter,
@@ -59,6 +69,7 @@ public class DataImportController {
 				.addObject("lat", lat).addObject("filepath", realpath);
 	}
 
+	
 	@RequestMapping("importdata")
 	public void importData(@RequestParam("mode") String mode, @RequestParam("emitter") String emitter,
 			@RequestParam("lng") float lng, @RequestParam("lat") float lat, @RequestParam("filepath") String filepath,
