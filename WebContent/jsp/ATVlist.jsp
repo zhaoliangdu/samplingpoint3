@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="datalist.jsp"></jsp:include>
 <div class="" style="width: 100%;">
-	<table class="table table-striped  table-bordered table-hover "
+	<table class="table table-striped  table-bordered table-hover myTable"
 		style="text-align: center; width: 100%">
 		<thead class="thead-light">
 			<tr style="font-size: 14px">

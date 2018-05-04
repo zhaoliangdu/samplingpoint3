@@ -66,7 +66,7 @@
 			</table>
 			<br>
 			<center>
-				<button type="submit" class="btn btn-primary" onclick="save()">保存</button>
+				<button type="submit" class="btn btn-primary" onclick="save()" >保存</button>
 				<a href="resetset" class="btn btn-dark">恢复默认设置</a>
 			</center>
 		</div>

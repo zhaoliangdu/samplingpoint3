@@ -48,8 +48,8 @@ body, html, #container {
 
 	var markers = [], positions = [];
 
-	function gdcheck() {
-		var gdck = document.getElementById("gdcheck").checked;
+	function showemitter() {
+		var gdck = document.getElementById("ischeck").checked;
 		if (gdck) {
 			$
 					.ajax({
@@ -59,24 +59,20 @@ body, html, #container {
 							var infoWindow = new AMap.InfoWindow({
 								offset : new AMap.Pixel(0, -30)
 							});
-							for (var i = 0; i < tran.length; i++) {
-								markers[i] = new AMap.Marker({
-									map : map,
-									position : [ tran[i].longitude,
-											tran[i].latitude ]
-								});
-								markers[i].setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
-									offset : new AMap.Pixel(18, 0),//修改label相对于maker的位置
-									content : tran[i].tName
-								});
-								markers[i].content = "地区：" + tran[i].area
-										+ "<br>" + "经度：" + tran[i].longitude
-										+ ",纬度：" + tran[i].latitude + "<br>"
-										+ "高度：" + tran[i].height + "<br>"
-										+ "负责人：" + tran[i].supervisor + "<br>"
-										+ "测试人员：" + tran[i].testPeople;
-								markers[i].on('click', markerClick);
-							}
+
+							markers = new AMap.Marker({
+								map : map,
+								position : [ tran.longitude, tran.latitude ]
+							});
+							markers.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+								offset : new AMap.Pixel(18, 0),//修改label相对于maker的位置
+								content : tran.emitterName
+							});
+							markers.content = "台站名称：" + tran.emitterName
+									+ "<br>" + "经度：" + tran.longitude + ",纬度："
+									+ tran.latitude;
+							markers.on('click', markerClick);
+
 							function markerClick(e) {
 								infoWindow.setContent(e.target.content);
 								infoWindow.open(map, e.target.getPosition());
@@ -85,7 +81,7 @@ body, html, #container {
 					});
 		} else {
 
-			AMap.event.addDomListener(document.getElementById('gdcheck'),
+			AMap.event.addDomListener(document.getElementById('ischeck'),
 					'click', function() {
 						map.remove(markers);
 					}, false);
@@ -159,7 +155,7 @@ body, html, #container {
 		contextMenu.open(map, e.lnglat);
 		contextMenuPositon = e.lnglat;
 	});
-	function mainji() {
+	function mianji() {
 		map.plugin([ "AMap.MouseTool" ], function() {
 			var mouseTool = new AMap.MouseTool(map);
 			//鼠标工具插件添加draw事件监听
@@ -171,22 +167,23 @@ body, html, #container {
 	}
 
 	//加载采样点
-	function addgpoints() {
+	function loadpoint() {
+		var testModeId = $("#datatype").val();
+		var mtype = $("#mtype").val();
+		$("#loadingTip").remove();
 		$('<div id="loadingTip">加载数据，请稍候...</div>').appendTo($("#container"));
-		testmodeId = $("#testmodeId").val();
 
 		$
 				.ajax({
 					url : "${pageContext.servletContext.contextPath }/getpoints",
 					type : "post",
 					data : {
-						"uid" : $("#uid").val(),
-						"testModeId" : testmodeId,
-						"typeId" : 0
+						"testModeId" : testModeId,
+						"typeId" : mtype
 					},
 					success : function(val) {
 						var colorArray = val[2];
-						$("#loadingTip").empty();
+						$("#loadingTip").remove();
 						$(
 								'<div id="loadingTip" style="background-color:#6699ff">加载完成!</div>')
 								.appendTo($("#container"));

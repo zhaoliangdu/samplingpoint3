@@ -4,7 +4,7 @@
 <jsp:include page="datalist.jsp"></jsp:include>
 <div class="" style="width: 100%;">
 	<table width="100%"
-		class="table table-striped table-bordered table-hover"
+		class="table table-striped table-bordered table-hover myTable"
 		style="text-align: center">
 		<thead class="thead-light">
 			<tr style="font-size: 15px">
@@ -29,8 +29,7 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${list }" var="digitaldata">
-				<tr>
-					<td><input type="checkbox" value="1" name=""></td>
+				<tr> 
 					<td>${digitaldata.id }</td>
 					<td>${digitaldata.time }</td>
 					<td>${digitaldata.area }</td>
