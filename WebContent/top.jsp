@@ -56,7 +56,7 @@
 			<li class="nav-item"><a href="index.jsp" class="nav-link">
 					百度地图</a></li>
 			<li class="nav-item"><a href="gaode" class="nav-link"> 高德地图</a></li>
-			<li class="nav-item"><a href="bing" class="nav-link"> 必应地图</a></li>
+		<!-- 	<li class="nav-item"><a href="bing" class="nav-link"> 必应地图</a></li> -->
 			<li class="nav-item"><a href="systemset?typeId=1"
 				class="nav-link"> 系统设置</a></li>
 

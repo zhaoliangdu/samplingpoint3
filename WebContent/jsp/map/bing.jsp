@@ -56,8 +56,7 @@ body, html, #bingMap {
 										title : tran.emitterName,
 										subTitle : ''
 									});
-							bingmap.entities.push(pushpins);
-
+							bingmap.entities.push(pushpins); 
 						}
 					});
 		} else {
