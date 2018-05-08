@@ -24,9 +24,9 @@ public class EmitterController {
 		response.setContentType("application/json;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter writer = response.getWriter();
-		Emitter Emitter = service.findByEmitter();
+		Emitter emitter = service.findByEmitter();
 		Gson gson = new Gson();
-		String json = gson.toJson(Emitter);
+		String json = gson.toJson(emitter);
 		System.err.println(json);
 		writer.print(json);
 		writer.flush();
