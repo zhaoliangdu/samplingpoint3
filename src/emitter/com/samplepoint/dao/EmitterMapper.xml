@@ -34,6 +34,5 @@
 		update emitter set
 		emitter_name=#{emitterName},emitter_longitude=#{longitude},emitter_latitude=#{latitude}
 		where eid=1;
-	</update>
-
+	</update> 
 </mapper>
