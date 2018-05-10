@@ -6,9 +6,12 @@
 <div class="container-fluid">
 	<form role="form"
 		action="${pageContext.servletContext.contextPath }/updatesysset"
-		method="post" class="form-inline"> 
+		method="post" class="form-inline">
+
 		<div class="panel panel-default" style="padding: 10px 40px;">
-			   <span style="color:red;">${sysmsg}</span>
+			<center>
+				<div class="panel-title" style="font-size: 20px">系统设置</div>
+			</center>
 			<table>
 				<tr>
 					<td>类型选择： <select class="form-control" onchange="changeset()"

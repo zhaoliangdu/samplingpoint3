@@ -95,8 +95,8 @@ body, html, #allmap {
 
 	function showemitter() {
 		var opts = {
-			width : 250, // 信息窗口宽度
-			height : 120, // 信息窗口高度
+			width : 280, // 信息窗口宽度
+			height : 150, // 信息窗口高度
 			title : "台站信息", // 信息窗口标题
 			enableMessage : true
 		//设置允许信息窗发送短息
@@ -158,7 +158,7 @@ body, html, #allmap {
 
 		var opts = {
 			width : 250, // 信息窗口宽度
-			height : 320, // 信息窗口高度
+			height : 300, // 信息窗口高度
 			title : "采样点详细信息", // 信息窗口标题
 		};
 		var options = {
