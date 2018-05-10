@@ -10,7 +10,7 @@
 		<div class="panel panel-default" style="padding: 10px 40px;">
 			   <span style="color:red;">${sysmsg}</span>
 			<table>
-				<tr>
+				<tr>  
 					<td>类型选择： <select class="form-control" onchange="changeset()"
 						id="chosev">
 							<option value="1">场强</option>
@@ -88,6 +88,7 @@
 		window.location.href = $("#locationset").val() + typeId;
 	}
 </script>
+
 <script>
 	function save() {
 		if ($("#score").val() > 15) {
