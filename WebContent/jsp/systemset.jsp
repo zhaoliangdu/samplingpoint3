@@ -88,7 +88,6 @@
 		window.location.href = $("#locationset").val() + typeId;
 	}
 </script>
-
 <script>
 	function save() {
 		if ($("#score").val() > 15) {
